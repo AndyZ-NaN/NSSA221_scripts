@@ -4,9 +4,7 @@ def read_csv(file_item, record_list):
     # Reads lines of data from a csv file and appends them to a list
     f = open(file_item, 'r')
 
-    # Header is saved in a separate variable
     headers = f.readline()
-    identify_headers()
     line = f.readline()
     while line:
         record = line.strip().split(',')
@@ -19,35 +17,32 @@ def read_csv(file_item, record_list):
 
 
 #Remove special characters when making username
-#Create username and Check that username is unique3
+#Create username and Check that username is unique
 def create_user():
-#Create password
+    return 0
 
+EMPID_IND = 0
+LNAME_IND = 1
+FNAME_IND = 2
+OFFICE_IND = 3
+PHONE_IND = 4
+DEPT_IND = 5
+GROUP_IND = 6
 
-#Do a useradd
-
+# Gets user info at its raw state
 users_info = []
 csv = raw_input("Enter the name of the csv : ")
-read_csv(Lab02_Users.csv
+csv = "Lab02_Users.csv"
+read_csv(csv, users_info)
 
-
-
-
-
-
-
-
-
-
-
-
-'''
-def identify_headers(header_line):
-    header_line = header_line.lower()
-    header_items = header_line.strip().split('
-    for index in range(0,len(header_items)):
-
-    
-# MAIN
-header_dict = {'employeeid':null, 'lastname': null, 'firstname': null, 'office': null, 'phone': null, 'department':null, 'group':null}
-'''
+#After read, check for records that have a length greater than 7 and see if there is something to remove
+print(users_info)
+for user in users_info:
+    if user[7] == '':
+        #print(user[7])
+        user.pop()
+        #print(len(user))
+    if len(user) > 7 and '' in user:
+        print("Found empty in user: " + ','.join(user))
+        user.remove("")
+        #print(user)
