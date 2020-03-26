@@ -107,6 +107,8 @@ for user in users_to_be_added:
     temp_pass = create_pass(user["username"])
     
     os.system("groupadd -f %s" % (user["group"]))
+    if not os.path.exists("/home/%s" % (user["department"])):
+        os.system("mkdir /home/%s" % (user["department"]))
     os.system("useradd -m -d /home/%s/%s -s /bin/bash -g %s -c \"%s\" %s" % (user["department"], user["username"], user["group"], user["fullname"], user["username"]))
     os.system("echo \"%s\" | passwd --stdin %s" % (temp_pass, user["username"]))
     os.system("passwd -e %s" % (user["username"]))
