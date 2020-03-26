@@ -53,6 +53,7 @@ def filter_entries(record_list, new_users):
             continue
         # Else create username for user
         else:
+            listing["fullname"] = user[FNAME_IND] + " " + user[LNAME_IND]
             username = format_name(user[FNAME_IND])[0] + format_name(user[LNAME_IND])
             # Ensure no duplicate usernames
             username_count = sum(x.count(username) for x in usernames)
@@ -79,9 +80,13 @@ def filter_entries(record_list, new_users):
             user[PHONE_IND] = ''
         listing["phone"] = user[PHONE_IND]
         new_users.append(listing)
+        
+def create_pass(username):
+    return username[::-1]
 
-#===========================================================#
-#===========================================================#
+#==================================================#
+#                       MAIN                       #                    
+#==================================================#
 
 users_info = []
 users_to_be_added = []
@@ -97,11 +102,11 @@ shift_cells(users_info)
 filter_entries(users_info, users_to_be_added)
 
 # List out all users to be added to the system
-for listing in users_to_be_added:
-    print(listing)
-
-'''
-    if user[GROUP_IND]
-    os.system("groupadd -f %s")
-    os.system("useradd -m -d /home/%s/%s -s /bin/bash -g %s
-'''
+for user in users_to_be_added:
+    print(user)
+    temp_pass = create_pass(user["username"])
+    
+    os.system("groupadd -f %s" % (user["group"]))
+    os.system("useradd -m -d /home/%s/%s -s /bin/bash -g %s -c \"%s\" %s" % (user["department"], user["username"], user["group"], user["fullname"], user["username"]))
+    os.system("echo \"%s\" | passwd --stdin %s" % (temp_pass, user["username"]))
+    os.system("passwd -e %s" % (user["username"]))
