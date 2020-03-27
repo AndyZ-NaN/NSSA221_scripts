@@ -103,7 +103,9 @@ filter_entries(users_info, users_to_be_added)
 
 # List out all users to be added to the system
 for user in users_to_be_added:
-    print(user)
+    print("Adding user: %s" % (user["username"]))
+    for key in user:
+        print(key +": "+user[key])
     temp_pass = create_pass(user["username"])
     
     os.system("groupadd -f %s" % (user["group"]))
